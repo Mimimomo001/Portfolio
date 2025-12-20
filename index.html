@@ -1,904 +1,263 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mimimomo's Portfolio</title>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tabassum Islam Mim</title>
+  <meta name="description" content="Tabassum Islam Mim — BSc (CSE). Researcher in Computer Vision, Explainable AI, RAG.">
+  <link rel="shortcut icon" href="asset\svg\whale-tail-wild-wildlife-big-svgrepo-com.svg" type="image/x-icon">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Work+Sans:wght@400;600;800&display=swap" rel="stylesheet">
 
-  <!--
-    - favicon
-  -->
-  <link rel="shortcut icon" href="./assets/images/logo.png" type="image/x-icon">
+  <!-- Main stylesheet -->
+  <link rel="stylesheet" href="styles.css">
 
-  <!--
-    - custom css link
-  -->
-  <link rel="stylesheet" href="./assets/css/style.css">
-
-  <!--
-    - google font link
-  -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <!-- Keep ScrollReveal & VanillaTilt -->
+  <script src="https://unpkg.com/scrollreveal" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.0/dist/vanilla-tilt.min.js" defer></script>
 </head>
+<body id="top">
+  <!-- Hamburger button -->
+  <button id="sidebar-toggle" aria-label="Toggle menu" class="hamburger">☰</button>
 
-<body>
+  <!-- Sidebar (collapsed by default) -->
+  <aside id="sidebar" class="collapsed" aria-hidden="true">
+    <nav class="sidebar-inner" role="navigation" aria-label="Primary">
+      <a class="logo" href="#top"><h2>Tabassum<br/>Islam<br/>Mim</h2></a>
+      <ul class="sidebar-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#project">Projects</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#news">Certifications</a></li>
+        <li><a href="#activities">Activities</a></li>
+      </ul>
+    </nav>
+  </aside>
 
-  <!--
-    - #MAIN
-  -->
+  <!-- SVG filter defs for the liquify effect (used by JS) -->
+  <svg style="position:absolute; width:0; height:0;" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="liquify-filter" x="-20%" y="-20%" width="140%" height="140%">
+        <feTurbulence id="turb" baseFrequency="0 0" numOctaves="2" seed="2" stitchTiles="noStitch" />
+        <feDisplacementMap in="SourceGraphic" scale="0" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </defs>
+  </svg>
 
-  <main>
+  <!-- Page wrapper (centered narrow column) -->
+  <div id="page-wrapper">
 
-    <!--
-      - #SIDEBAR
-    -->
-
-    <aside class="sidebar" data-sidebar>
-
-      <div class="sidebar-info">
-
-        <figure class="avatar-box">
-          <img src="./assets/images/my-avatar.png" alt="Tabassum Islam Mim" width="80">
-        </figure>
-
-        <div class="info-content">
-          <h1 class="name" title="Tabassum Islam Mim">Tabassum Islam Mim</h1>
-
-          <p class="title">Computer Engineer</p>
+    <!-- ABOUT (page starts here) -->
+    <section class="center" id="about">
+      <div class="about-inner">
+        <!-- Image stack: back (bigger) + front (circular mask) -->
+        <div class="about-img-container">
+          <div class="img-stack" id="imgStack">
+            <img class="img-back" id="profileBack" src="asset\img\InShot_20220710_162248085.jpg" alt="Profile back" />
+            <img class="img-front" id="profileFront" src="asset\img\InShot_20220710_162248085.jpg" alt="Profile front" />
+          </div>
         </div>
 
-        <button class="info_more-btn" data-sidebar-btn>
-          <span>Show Contacts</span>
+        <h2 class="gradient">Tabassum Islam Mim</h2>
 
-          <ion-icon name="chevron-down"></ion-icon>
-        </button>
-
-      </div>
-
-      <div class="sidebar-info_more">
-
-        <div class="separator"></div>
-
-        <ul class="contacts-list">
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="mail-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Email</p>
-
-              <a href="mailto:tabassum.i.mim0614@gmail.com" class="contact-link">ti707mim@gmail.com</a>
-            </div>
-
-          </li>
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="calendar-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Birthday</p>
-
-              <time datetime="1999-09-01">September 01, 1999</time>
-            </div>
-
-          </li>
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="location-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Location</p>
-
-              <address>Dhaka, Bangladesh</address>
-            </div>
-
-          </li>
-
+        <ul class="about-social-container">
+          <li><img src="./asset/svg/github.svg" alt="github"/><a href="https://github.com/Mimimomo001" target="_blank" rel="noopener noreferrer">Github</a></li>
+          <li><img src="./asset/svg/mail.svg" alt="mail"/><a href="mailto:ti707mim@gmail.com">Mail</a></li>
+          <li><img src="./asset/svg/linkedin.svg" alt="linkedin"/><a href="#" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
         </ul>
 
-        <div class="separator"></div>
-
-        <ul class="social-list">
-
-          <li class="social-item">
-            <a href="https://www.facebook.com/tabassumislammim.1999/" class="social-link">
-              <ion-icon name="logo-facebook"></ion-icon>
-            </a>
-          </li>
-
-          <li class="social-item">
-            <a href="https://github.com/Mimimomo001" class="social-link">
-              <ion-icon name="logo-github"></ion-icon>
-            </a>
-          </li>
-
-          <li class="social-item">
-            <a href="https://www.linkedin.com/in/tabassum-islam-mim-0011491b1/" class="social-link">
-              <ion-icon name="logo-linkedin"></ion-icon>
-            </a>
-          </li>
-
-        </ul>
-
-      </div>
-
-    </aside>
-
-
-
-
-
-    <!--
-      - #main-content
-    -->
-
-    <div class="main-content">
-
-      <!--
-        - #NAVBAR
-      -->
-
-      <nav class="navbar">
-
-        <ul class="navbar-list">
-
-          <li class="navbar-item">
-            <button class="navbar-link  active" data-nav-link>About</button>
-          </li>
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Resume</button>
-          </li>
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Portfolio</button>
-          </li>
-
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Contact</button>
-          </li>
-
-        </ul>
-
-      </nav>
-
-
-
-
-
-      <!--
-        - #ABOUT
-      -->
-
-      <article class="about  active" data-page="about">
-
-        <header>
-          <h2 class="h2 article-title">About me</h2>
-        </header>
-
-        <section class="about-text">
-          <p>
-            Hello! Currently working as a paid Intern at the ICT cell, Bridges Division, Government of the People's Republic of Bangladesh. Other than that, as a Computer Science and Engineering grad specializing in Machine Learning, Deep Learning, Data Science, with hands-on experience from an Erasmus+ scholarship at Istanbul Kultur University. I excel in technical research and app development, and have been recognized for my achievements in cybersecurity and technology competitions. 
-          </p>
-        </section>
-
-
-        <!--
-          - service
-        -->
-
-        <section class="service">
-
-          <h3 class="h3 service-title">What I am currently doing</h3>
-
-          <ul class="service-list">
-
-            <li class="service-item">
-
-              <div class="service-icon-box">
-                <img src="./assets/images/dna-2-white.svg
-                " alt="reasearch icon" width="40">
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Internship at Bangladesh Bridges Division</h4>
-
-                <p class="service-item-text">
-                  Currently working as a paid Intern at the ICT cell, Bridges Division, Ministry of Road Transport and Bridges, Government of the People's Republic of Bangladesh.
-                </p>
-              </div>
-
-            </li>
-
-            <li class="service-item">
-
-              <div class="service-icon-box">
-                <img src="./assets/images/code-svgrepo-com.svg" alt="Coding Icon" width="40">
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Coding</h4>
-
-                <p class="service-item-text">
-                  Currently focusing on learning "R". Coding can be considered one of my creative outlets as I come from a background 
-                  where curiosity and problem-solving have always been at the forefront.
-                </p>
-              </div>
-
-            </li>
-
-            <li class="service-item">
-
-              <div class="service-icon-box">
-                <img src="./assets/images/phone-white.svg" alt="mobile app icon" width="40">
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Developing web apps</h4>
-
-                <p class="service-item-text">
-                  I aim to consistently create applications that 
-                  are both refined and robust, ensuring their reliability.
-                </p>
-              </div>
-
-            </li>
-
-            <li class="service-item">
-
-              <div class="service-icon-box">
-                <img src="./assets/images/controller-white.svg" alt="Game icon" width="40">
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Game development and gaming</h4>
-
-                <p class="service-item-text">
-                  Coding logics implemented through games are quite fascinating to me. I delved into not only playing
-                  games but as well as understanding their logic through projects.
-                </p>
-              </div>
-
-            </li>
-
-          </ul>
-
-        </section>
-
-
-        <!--
-          - testimonials
-        -->
-
-        <section class="testimonials">
-
-          <h3 class="h3 testimonials-title">Skills</h3>
-
-          <ul class="testimonials-list has-scrollbar">
-
-                        <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-2.png" alt="Python" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Python</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Gained high expertise in Python. Knowlegable in
-                    advanced data structures, alogorithm implementation, machince learning
-                    model implementation, data handling etc.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-1.png" alt="Cpp" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>C++</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Learned the fundamentals of C++ and essential concepts such as variables, data types, control structures (loops and conditionals), functions, and basic input/output operations
-                    and the principles of object-oriented programming.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-3.png" alt="Java" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>JAVA</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Acquired a foundational understanding of programming concepts, with a focus on Java's syntax, data types, 
-                    control structures, and basic object-oriented programming principles. Created app development projects using 
-                    Android Studio.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-4.png" alt="flutter" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Flutter + DART</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Learned mobile app development with Flutter and Dart to design, develop, and 
-                    deploy cross-platform mobile applications as well as backend development using FireBase.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-          </ul>
-
-        </section>
-
-
-        <!--
-          - testimonials modal
-        -->
-
-        <div class="modal-container" data-modal-container>
-
-          <div class="overlay" data-overlay></div>
-
-          <section class="testimonials-modal">
-
-            <button class="modal-close-btn" data-modal-close-btn>
-              <ion-icon name="close-outline"></ion-icon>
-            </button>
-
-            <div class="modal-img-wrapper">
-              <figure class="modal-avatar-box">
-                <img src="./assets/images/avatar-1.png" alt="bleh" width="80" data-modal-img>
-              </figure>
-
-              <img src="./assets/images/icon-quote.svg" alt="quote icon">
-            </div>
-
-            <div class="modal-content">
-
-              <h4 class="h3 modal-title" data-modal-title>bleh</h4>
-
-              <time datetime="2021-06-14">14 June, 2021</time>
-
-              <div data-modal-text>
-                <p>
-                 bleh
-                </p>
-              </div>
-
-            </div>
-
-          </section>
-
+        <p class="bio">
+          Computer Science and Engineering graduate specializing in Computer Vision, Artificial Intelligence, Machine Learning, and Deep Learning. Former paid Intern at the ICT Cell, Bridges Division, Government of the People’s Republic of Bangladesh. Erasmus+ scholar at Istanbul Kültür University. Strong background in AI-driven application development and secure system design.
+        </p>
+
+        <!-- Quote (unchanged) -->
+        <div class="current-quote">“You got two legs and a heart beat. What's stopping you? - Inuyasha”</div>
+        
+        <div class="cv-actions">
+          <a href="asset\img\Tabassum Islam Mim.pdf" target="_blank" class="cv-btn outline">
+            View CV
+          </a>
         </div>
+        
 
-      </article>
+        <!-- Skills (plain text items - no links) -->
+        <h3>Skills / Tools</h3>
+        <ul class="skill-grid">
+          <li>Python</li>
+          <li>Java</li>
+          <li>C / C++</li>
 
+          <li>JavaScript</li>
+          <li>Computer Vision</li>
+          <li>Machine Learning / Deep Learning</li>
 
+          <li>TensorFlow</li>
+          <li>PyTorch</li>
+          <li>Scikit-learn</li>
 
+          <li>NumPy</li>
+          <li>Pandas</li>
+          <li>Matplotlib / Seaborn</li>
 
+          <li>Explainable AI (Grad-CAM, SHAP, LIME)</li>
+          <li>Retrieval-Augmented Generation (RAG)</li>
+          <li>Jupyter / Notebooks</li>
 
-      <!--
-        - #RESUME
-      -->
+          <li>Git</li>
+          <li>VS Code</li>
+          <li>GitHub</li>
+        </ul>
+      </div>
+    </section>
 
-      <article class="resume" data-page="resume">
+    <!-- PROJECTS -->
+    <section class="center" id="project">
+      <h2>Projects</h2>
 
-        <header>
-          <h2 class="h2 article-title">Resume</h2>
-        </header>
-
-        <section class="timeline">
-
-          <div class="title-wrapper">
-            <div class="icon-box">
-              <ion-icon name="book-outline"></ion-icon>
-            </div>
-
-            <h3 class="h3">Education</h3>
+      <div class="project-container single-column">
+        <article class="repository-card">
+          <div class="repository-head">
+            <h3>BrainT_XAI_RAG</h3>
+            <a class="ext" href="https://github.com/Mimimomo001/BrainT_X-AI_RAG" target="_blank" rel="noopener noreferrer">↗</a>
           </div>
+          <p>Explainable Vision AI pipeline for brain tumor detection using EfficientNetB3, Grad-CAM and a Visual RAG layer. Achieved ~91.5% accuracy.</p>
+          <div class="tags">Python · TensorFlow / PyTorch</div>
+        </article>
 
-          <ol class="timeline-list">
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Daffodil International University</h4>
-
-              <span>2020 — 2024</span>
-
-              <p class="timeline-text">
-                Bachelor of Science in Computer Science and Engineering
-              </p>
-              <p class="timeline-text">
-                CGPA : 3.53 out of 4.00 (72%)
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Mirpur Girls' Ideal Lab. Inst.
-              </h4>
-
-              <span>Batch of 2019</span>
-
-              <p class="timeline-text">
-                HSC - Science Group
-              </p>
-              <p class="timeline-text">
-                GPA : 3.67 out of 5.00
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Monipur High School</h4>
-
-              <span>Batch of 2016</span>
-
-              <p class="timeline-text">
-                SSC - Science Group
-              </p>
-
-            </li>
-
-          </ol>
-
-        </section>
-
-        <section class="timeline">
-
-          <div class="title-wrapper">
-            <div class="icon-box">
-              <ion-icon name="book-outline"></ion-icon>
-            </div>
-
-            <h3 class="h3">Awards</h3>
+        <article class="repository-card">
+          <div class="repository-head">
+            <h3>Dental Segmentation (FastViT)</h3>
+            <a class="ext" href="https://github.com/Mimimomo001/Dental-Semantic-Segmentation-using-FastViT" target="_blank" rel="noopener noreferrer">↗</a>
           </div>
+          <p>Semantic segmentation for dental caries using FastViT; 92.5% pixel accuracy and 79.25% mIoU.</p>
+          <div class="tags">PyTorch · TIMM</div>
+        </article>
 
-          <ol class="timeline-list">
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Erasmus+ Scholarship</h4>
-
-              <span>2022</span>
-
-              <p class="timeline-text">
-                Studied for one semester under the European Union's Erasmus+ full-funded scholarship at Istanbul Kultur University.
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Second Runner Up in Cyber Security Awareness Project 2023 </h4>
-
-              <span>Casual</span>
-
-              <p class="timeline-text">
-                Did a project to showcase how can various cyber attack such as ransomware, phising etc. affect people.
-              </p>
-
-            </li>
-
-          </ol>
-
-        </section>
-      </article>
-
-
-
-
-
-      <!--
-        - #PORTFOLIO
-      -->
-
-      <article class="portfolio" data-page="portfolio">
-
-        <header>
-          <h2 class="h2 article-title">Projects</h2>
-        </header>
-
-        <section class="projects">
-
-          <div class="filter-select-box">
-
-            <button class="filter-select" data-select>
-
-              <div class="select-value" data-selecct-value>Select category</div>
-
-              <div class="select-icon">
-                <ion-icon name="chevron-down"></ion-icon>
-              </div>
-
-            </button>
-
-            <ul class="select-list">
-
-              <li class="select-item">
-                <button data-select-item>All</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>Web design</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>Applications</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>Web development</button>
-              </li>
-
-            </ul>
-
+        <article class="repository-card">
+          <div class="repository-head">
+            <h3>Explaining Breast Cancer Predictions (SHAP)</h3>
+            <a class="ext" href="https://github.com/Mimimomo001/Explaining-Breast-Cancer-Diagnosis-Predictions-with-SHAP" target="_blank" rel="noopener noreferrer">↗</a>
           </div>
-
-          <ul class="project-list">
-            <li class="project-item  active" data-filter-item data-category="web development">
-              <a href="https://github.com/Mimimomo001/Hotovaga.git">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/project-2.png" alt="HV" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">HotoVaga</h3>
-
-                <p class="project-category">Python OpenCV project</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="applications">
-              <a href="https://github.com/Mimimomo001/Quizzo.git">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/project-4.png" alt="Quizzo" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Quizzo</h3>
-
-                <p class="project-category">Flutter DART app</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="web design">
-              <a href="https://github.com/Mimimomo001/MaskOn.git">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/project-5.png" alt="MO" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">MaskOn</h3>
-
-                <p class="project-category">Platformer Game using JAVA</p>
-
-              </a>
-            </li>
-
-          </ul>
-
-        </section>
-
-      </article>
-
-
-
-
-
-      <!--
-        - #BLOG
-      -->
-
-      <article class="blog" data-page="blog">
-
-        <header>
-          <h2 class="h2 article-title">Blog</h2>
-        </header>
-
-        <section class="blog-posts">
-
-          <ul class="blog-posts-list">
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-1.jpg" alt="Design conferences in 2022" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Design conferences in 2022</h3>
-
-                  <p class="blog-text">
-                    Veritatis et quasi architecto beatae vitae dicta sunt, explicabo.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-2.jpg" alt="Best fonts every designer" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Best fonts every designer</h3>
-
-                  <p class="blog-text">
-                    Sed ut perspiciatis, nam libero tempore, cum soluta nobis est eligendi.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-3.jpg" alt="Design digest #80" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Design digest #80</h3>
-
-                  <p class="blog-text">
-                    Excepteur sint occaecat cupidatat no proident, quis nostrum exercitationem ullam corporis suscipit.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-4.jpg" alt="UI interactions of the week" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">UI interactions of the week</h3>
-
-                  <p class="blog-text">
-                    Enim ad minim veniam, consectetur adipiscing elit, quis nostrud exercitation ullamco laboris nisi.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-5.jpg" alt="The forgotten art of spacing" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">The forgotten art of spacing</h3>
-
-                  <p class="blog-text">
-                    Maxime placeat, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-6.jpg" alt="Design digest #79" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Design digest #79</h3>
-
-                  <p class="blog-text">
-                    Optio cumque nihil impedit uo minus quod maxime placeat, velit esse cillum.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-          </ul>
-
-        </section>
-
-      </article>
-
-
-
-
-
-      <!--
-        - #CONTACT
-      -->
-
-      <article class="contact" data-page="contact">
-
-        <header>
-          <h2 class="h2 article-title">Contact</h2>
-        </header>
-
-        <section class="mapbox" data-mapbox>
-          <figure>
-            <iframe
-              src="https://maps.google.com/maps?q=DHAKA%20bangladesh&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed"
-              width="400" height="300" loading="lazy"></iframe>
-          </figure>
-        </section>
-
-        <section class="contact-form">
-
-          <h3 class="h3 form-title">Contact Form</h3>
-
-          <form action="mailto:tabassum.i.mim0614@gmail.com" class="form" data-form>
-
-            <div class="input-wrapper">
-              <input type="text" name="fullname" class="form-input" placeholder="Full name" required data-form-input>
-
-              <input type="email" name="email" class="form-input" placeholder="Email address" required data-form-input>
-            </div>
-
-            <textarea name="message" class="form-input" placeholder="Your Message" required data-form-input></textarea>
-
-            <button class="form-btn" type="submit" disabled data-form-btn>
-              <ion-icon name="paper-plane"></ion-icon>
-              <span>Send Message</span>
-            </button>
-
-          </form>
-
-        </section>
-
-      </article>
-
-    </div>
-
-  </main>
-
-
-
-
-
-
-  <!--
-    - custom js link
-  -->
-  <script src="./assets/js/script.js"></script>
-
-  <!--
-    - ionicon link
-  -->
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
+          <p>Interpreted a breast cancer classification model using SHAP and produced feature-importance visualizations.</p>
+          <div class="tags">SHAP · Scikit-learn</div>
+        </article>
+
+        <article class="repository-card">
+          <div class="repository-head">
+            <h3>Similarity Search App (RAG)</h3>
+            <a class="ext" href="https://github.com/Mimimomo001/Similarity-Search-App-Using-Retrieval-Augmented-Generation--RAG-" target="_blank" rel="noopener noreferrer">↗</a>
+          </div>
+          <p>Streamlit + ChromaDB RAG app for citation-aware QA and similarity search over documents.</p>
+          <div class="tags">Streamlit · ChromaDB</div>
+        </article>
+
+        <div class="more-repo">more at <a href="https://github.com/Mimimomo001?tab=repositories" target="_blank" rel="noopener noreferrer">GITHUB</a></div>
+      </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section class="center" id="education">
+      <h2>Education</h2>
+      <p><strong>BSc in Computer Science & Engineering</strong><br/>
+      <a href="https://daffodilvarsity.edu.bd/" target="_blank" rel="noopener noreferrer">Daffodil International University</a> (June 2020 – Sept 2024). Final grade: 3.53 / 4.00.</p>
+    </section>
+
+    <!-- RESEARCH -->
+    <section class="center" id="research">
+      <h2>Thesis & Research</h2>
+      <p><a href="http://dspace.daffodilvarsity.edu.bd:8080/handle/123456789/14541" target="_blank" rel="noopener noreferrer"><strong>LRMC-DeepLabV3+: Multiclass Leaf Disease Semantic Segmentation</strong></a> — proposed an improved DeepLabV3+ model evaluated on six plant leaf classes; reported 97.34% accuracy and 93.47% mIoU. Roles: methodology, coding, dataset curation, and first authorship.</p>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section class="center" id="experience">
+      <h2>Experience</h2>
+      <p><strong>Paid Intern (ICT)</strong> — <a href="https://bridgesdivision.gov.bd/" target="_blank" rel="noopener noreferrer">Government Bridges Division</a> (31 Mar 2025 – 30 Jun 2025). Supported ICT operations and digital infrastructure at the Bridges Division.</p>
+    </section>
+
+    <!-- CERTIFICATIONS -->
+    <section class="center" id="news">
+      <h2>Certifications</h2>
+      <ul class="compact-list">
+        <li><a href="https://drive.google.com/file/d/1U3oof43sQ8RiPn4jwTYaRGPj4GTE2eh8/view?usp=drive_link" target="_blank" rel="noopener noreferrer"><u>Creating AI Applications using RAG</u></a> — Codecademy</li>
+        <li><a href="https://drive.google.com/file/d/1jhELve9UQVvc5oQbKMSkUfMeKWtjqCzc/view?usp=drive_link" target="_blank" rel="noopener noreferrer"><u>Learn Explainable AI</u></a> — Codecademy</li>
+        <li><a href="https://drive.google.com/file/d/1W-3IIJKcxyIBL0qnv5cYOrN300XZ6gPk/view?usp=drive_link" target="_blank" rel="noopener noreferrer"><u>Generative AI on AWS</u></a> — Codecademy</li>
+        <li><a href="https://drive.google.com/file/d/16ZNXp_tp--YhFORPn4dL_m7QkipFdeCC/view?usp=drive_link" target="_blank" rel="noopener noreferrer"><u>Advanced Algorithms & Data Structures with Python</u></a> — Codecademy</li>
+      </ul>
+    </section>
+
+    <!-- ACTIVITIES -->
+    <section class="center" id="activities">
+      <h2>Extracurriculars & Awards</h2>
+      <ul class="extras-list">
+        <li>Erasmus+ KA107 Scholar (2022) — Istanbul Kültür University (34 ECTS)</li>
+        <li>Member — Computer & Programming Club (CPC), Daffodil International University</li>
+        <li>Presenter — IEEE CS BDC Summer Symposium (2023)</li>
+        <li>Second Runner Up — Cyber Security Awareness Project (2023)</li>
+      </ul>
+
+      <h3>Languages</h3>
+      <ul class="compact-list">
+        <li>Bangla (Native)</li>
+        <li>English (IELTS 7.5 | CEFR C1)</li>
+      </ul>
+
+      <h3>Hobbies</h3>
+      <ul class="compact-list">
+        <li>Gaming</li>
+        <li>Music</li>
+        <li>Anime</li>
+        <li>Cooking</li>
+      </ul>
+    </section>
+
+
+    <footer id="contact" class="center">
+      <p>© <script>document.write(new Date().getFullYear());</script> Built by <a href="https://github.com/Mimimomo001" target="_blank" rel="noopener noreferrer">Mimimomo001</a></p>
+    </footer>
+
+  </div>
+
+  <div id="fish" aria-hidden="true">
+    <svg
+      fill="#272869"
+      version="1.1"
+      id="Layer_1"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      viewBox="0 0 256 256"
+      enable-background="new 0 0 256 256"
+      xml:space="preserve"
+    >
+      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+      <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+      <g id="SVGRepo_iconCarrier">
+        <path d="M244.311,143.467c0,0-173.441,0-174.859,0c-19.77,0-35.7-15.792-35.7-35.562c0-9.787,3.938-18.648,10.299-25.116
+          l23.137,23.137c13.4,13.4,35.129,13.4,48.529,0L80.401,70.609c-8.369-8.359-21.424-9.127-30.679-2.353
+          c6.774-9.255,6.006-22.31-2.353-30.679L12.052,2.261c-13.4,13.4-13.4,35.129,0,48.529l20.646,20.646
+          C13.569,88.302,2,110.218,2,134.192C2,187.073,58.297,230,128.024,230.571c0,0,0,23.167,0,23.167
+          c0,0,11.076,0.246,20.38-7.489c7.036-5.85,11.127-14.865,11.127-24.017V193.7
+          c12.721-3.013,33.219-9.816,49.386-26.603h7.827
+          c-10.279,13.577-30.837,25.884-51.306,31.191v11.194
+          c29.163-7.246,52.251-22.832,64.607-42.385h6.862
+          c-12.829,22.625-38.595,40.633-71.47,48.46v6.675
+          c0,1.516-0.098,3.003-0.276,4.47c43.931-9.698,78.056-36.773,88.414-70.751
+          C255.466,149.739,250.799,143.467,244.311,143.467z
+          M178.355,171.114h-4.874c-2.176,0-3.938-1.762-3.938-3.938
+          c0-2.176,1.762-3.938,3.938-3.938h4.874c2.176,0,3.938,1.762,3.938,3.938
+          C182.293,169.351,180.531,171.114,178.355,171.114z">
+        </path>
+      </g>
+    </svg>
+  </div>
+  
+  
+  
+  
+  
+  <!-- Local script -->
+  <script src="./script/event-effect.js" defer></script>
 </body>
-
 </html>
