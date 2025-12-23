@@ -1,10 +1,13 @@
-// event-effect.js
+// event-effect.js — small responsive improvements
 // Handles sidebar toggle, smooth scrolling, ScrollReveal, VanillaTilt,
 // profile-image liquify interaction, and a small white fish that follows the cursor.
 
 document.addEventListener("DOMContentLoaded", () => {
   const sidebar = document.getElementById("sidebar");
   const toggle = document.getElementById("sidebar-toggle");
+
+  // Responsive breakpoint: keep this in sync with CSS (max-width:920px)
+  const mobileQuery = window.matchMedia('(max-width:920px)');
 
   // Toggle sidebar open/close
   toggle.addEventListener("click", (e) => {
@@ -23,10 +26,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Close sidebar when clicking outside on small screens
+  // Close sidebar when clicking outside on small screens (use media query)
   document.addEventListener("click", (e) => {
     const isInside = sidebar.contains(e.target) || toggle.contains(e.target);
-    if (!isInside && sidebar.classList.contains("open") && window.innerWidth < 900) {
+    if (!isInside && sidebar.classList.contains("open") && mobileQuery.matches) {
       sidebar.classList.remove("open");
       sidebar.classList.add("collapsed");
       sidebar.setAttribute("aria-hidden", "true");
@@ -43,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const id = href.slice(1);
       const target = document.getElementById(id);
       if (!target) return;
-      if (window.innerWidth < 900) {
+      if (mobileQuery.matches) {
         sidebar.classList.remove("open");
         sidebar.classList.add("collapsed");
         sidebar.setAttribute("aria-hidden", "true");
@@ -116,8 +119,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    imgStack.addEventListener("mouseenter", (e) => { start(); setTargetFromEvent(e); });
-    imgStack.addEventListener("mousemove", (e) => { setTargetFromEvent(e); });
+    imgStack.addEventListener("mouseenter", (e) => { if (!mobileQuery.matches) { start(); setTargetFromEvent(e); }});
+    imgStack.addEventListener("mousemove", (e) => { if (!mobileQuery.matches) setTargetFromEvent(e); });
     imgStack.addEventListener("mouseleave", (e) => {
       targetFreq = 0;
       setTimeout(() => {
@@ -137,74 +140,98 @@ document.addEventListener("DOMContentLoaded", () => {
   // -----------------------
   const fish = document.getElementById("fish");
   if (fish) {
-    // starting positions
-    let mouseX = window.innerWidth / 2;
-    let mouseY = window.innerHeight / 2;
-    let fishX = mouseX;
-    let fishY = mouseY;
-    let lastX = mouseX;
-    let lastY = mouseY;
-    let vx = 0, vy = 0;
-    const ease = 0.14; // follow lag
+    // Detect touch-capable devices: prefer hiding fish on touch for UX & perf
+    const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints && navigator.maxTouchPoints > 0);
+    if (isTouch || mobileQuery.matches) {
+      // hide fish for touch / small devices
+      fish.style.display = "none";
+    } else {
+      // starting positions
+      let mouseX = window.innerWidth / 2;
+      let mouseY = window.innerHeight / 2;
+      let fishX = mouseX;
+      let fishY = mouseY;
+      let lastX = mouseX;
+      let lastY = mouseY;
+      let vx = 0, vy = 0;
+      const ease = 0.14; // follow lag
 
-    // Update mouse target on pointermove / touch
-    function handleMove(e) {
-      if (e.touches && e.touches.length) {
-        mouseX = e.touches[0].clientX;
-        mouseY = e.touches[0].clientY;
-      } else {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
+      // Update mouse target on pointermove / touch
+      function handleMove(e) {
+        if (e.touches && e.touches.length) {
+          mouseX = e.touches[0].clientX;
+          mouseY = e.touches[0].clientY;
+        } else {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+        }
       }
-    }
-    window.addEventListener("pointermove", handleMove, { passive: true });
-    window.addEventListener("touchmove", handleMove, { passive: true });
+      window.addEventListener("pointermove", handleMove, { passive: true });
+      window.addEventListener("touchmove", handleMove, { passive: true });
 
-    // Animation loop
-    function animateFish() {
-      // lerp
-      fishX += (mouseX - fishX) * ease;
-      fishY += (mouseY - fishY) * ease;
+      // Animation loop
+      function animateFish() {
+        // lerp
+        fishX += (mouseX - fishX) * ease;
+        fishY += (mouseY - fishY) * ease;
 
-      // velocity
-      vx = (fishX - lastX);
-      vy = (fishY - lastY);
+        // velocity
+        vx = (fishX - lastX);
+        vy = (fishY - lastY);
 
-      lastX = fishX;
-      lastY = fishY;
+        lastX = fishX;
+        lastY = fishY;
 
-      // rotation based on velocity
-      const angle = Math.atan2(vy, vx) * (180 / Math.PI);
-      const speed = Math.min(1.6, Math.hypot(vx, vy) * 0.08);
-      const scale = 1 + speed * 0.14;
+        // rotation based on velocity
+        const angle = Math.atan2(vy, vx) * (180 / Math.PI);
+        const speed = Math.min(1.6, Math.hypot(vx, vy) * 0.08);
+        const scale = 1 + speed * 0.14;
 
-      // position fish by setting left/top and transform for rotation & scale
-      fish.style.left = `${fishX}px`;
-      fish.style.top = `${fishY}px`;
-      fish.style.transform = `translate(-50%, -50%) rotate(${angle}deg) scale(${scale})`;
+        // position fish by setting left/top and transform for rotation & scale
+        fish.style.left = `${fishX}px`;
+        fish.style.top = `${fishY}px`;
+        fish.style.transform = `translate(-50%, -50%) rotate(${angle}deg) scale(${scale})`;
 
+        requestAnimationFrame(animateFish);
+      }
       requestAnimationFrame(animateFish);
-    }
-    requestAnimationFrame(animateFish);
 
-    // reduce opacity when pointer over interactive elements
-    function pointerInteracts(e) {
-      const tag = e.target.tagName;
-      if (["A","BUTTON","INPUT","TEXTAREA","SELECT","LABEL"].includes(tag)) {
-        fish.style.opacity = "0.22";
-      } else {
-        fish.style.opacity = "1";
+      // reduce opacity when pointer over interactive elements
+      function pointerInteracts(e) {
+        const tag = e.target.tagName;
+        if (["A","BUTTON","INPUT","TEXTAREA","SELECT","LABEL"].includes(tag)) {
+          fish.style.opacity = "0.22";
+        } else {
+          fish.style.opacity = "1";
+        }
       }
-    }
-    window.addEventListener("pointerdown", pointerInteracts);
-    window.addEventListener("pointerup", pointerInteracts);
-    window.addEventListener("pointerover", pointerInteracts);
-    window.addEventListener("pointerout", pointerInteracts);
+      window.addEventListener("pointerdown", pointerInteracts);
+      window.addEventListener("pointerup", pointerInteracts);
+      window.addEventListener("pointerover", pointerInteracts);
+      window.addEventListener("pointerout", pointerInteracts);
 
-    // keep fish on-screen on resize
-    window.addEventListener("resize", () => {
-      mouseX = Math.min(window.innerWidth - 6, mouseX);
-      mouseY = Math.min(window.innerHeight - 6, mouseY);
-    }, { passive: true });
+      // keep fish on-screen on resize
+      window.addEventListener("resize", () => {
+        mouseX = Math.min(window.innerWidth - 6, mouseX);
+        mouseY = Math.min(window.innerHeight - 6, mouseY);
+      }, { passive: true });
+    }
   }
+
+  // Keep JS reactive if the viewport crosses the mobile breakpoint
+  mobileQuery.addEventListener && mobileQuery.addEventListener('change', (e) => {
+    // If we moved to mobile, ensure sidebar is collapsed and non-pointer features are disabled
+    if (e.matches) {
+      sidebar.classList.remove("open");
+      sidebar.classList.add("collapsed");
+      sidebar.setAttribute("aria-hidden", "true");
+      toggle.classList.remove("move-right");
+      // hide fish if present
+      if (fish) fish.style.display = "none";
+    } else {
+      // on larger screens, show fish again (only if not touch)
+      const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints && navigator.maxTouchPoints > 0);
+      if (fish && !isTouch) fish.style.display = "";
+    }
+  });
 });

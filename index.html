@@ -1,267 +1,157 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Tabassum Islam Mim</title>
-  <link rel="shortcut icon" href="asset\svg\whale-tail-wild-wildlife-big-svgrepo-com.svg" type="image/x-icon">
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Work+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+  <title>Portfolio — Responsive</title>
 
-  <!-- Main stylesheet -->
-  <link rel="stylesheet" href="styles.css">
+  <!-- Link to responsive stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
 
-  <!-- Keep ScrollReveal & VanillaTilt -->
-  <script src="https://unpkg.com/scrollreveal" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.0/dist/vanilla-tilt.min.js" defer></script>
+  <!-- Google fonts (optional, original used Work Sans + Montserrat) -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Work+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body id="top">
-  <!-- Hamburger button -->
-  <button id="sidebar-toggle" aria-label="Toggle menu" class="hamburger">☰</button>
 
-  <!-- Sidebar (collapsed by default) -->
-  <aside id="sidebar" class="collapsed" aria-hidden="true">
-    <nav class="sidebar-inner" role="navigation" aria-label="Primary">
-      <a class="logo" href="#top"><h2>Tabassum<br/>Islam<br/>Mim</h2></a>
+<script>
+  // mark document with a class if touch-capable (no visible change)
+  if (('ontouchstart' in window) || (navigator.maxTouchPoints && navigator.maxTouchPoints > 0)) {
+    document.documentElement.classList.add('has-touch');
+  }
+</script>
+
+<!-- Sidebar -->
+<aside id="sidebar" class="collapsed" aria-hidden="true">
+  <div class="sidebar-inner">
+    <div class="logo">
+      <h2>My Portfolio</h2>
+    </div>
+
+    <nav>
       <ul class="sidebar-links">
         <li><a href="#about">About</a></li>
-        <li><a href="#project">Projects</a></li>
-        <li><a href="#education">Education</a></li>
-        <li><a href="#research">Research</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#news">Certifications</a></li>
-        <li><a href="#activities">Activities</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
-  </aside>
+  </div>
+</aside>
 
-  <!-- SVG filter defs for the liquify effect (used by JS) -->
-  <svg style="position:absolute; width:0; height:0;" aria-hidden="true" focusable="false">
-    <defs>
-      <filter id="liquify-filter" x="-20%" y="-20%" width="140%" height="140%">
-        <feTurbulence id="turb" baseFrequency="0 0" numOctaves="2" seed="2" stitchTiles="noStitch" />
-        <feDisplacementMap in="SourceGraphic" scale="0" xChannelSelector="R" yChannelSelector="G" />
-      </filter>
-    </defs>
+<!-- Hamburger / sidebar toggle -->
+<button id="sidebar-toggle" class="hamburger" aria-label="Toggle menu" title="Toggle menu">
+  ☰
+</button>
+
+<!-- Fish cursor (follows pointer on non-touch devices) -->
+<div id="fish" aria-hidden="true">
+  <!-- simple stylized fish SVG — white fill -->
+  <svg viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+    <g transform="translate(0,0)">
+      <path d="M6 30 C20 14, 50 6, 80 12 C110 18, 110 42, 80 48 C50 54, 20 46, 6 30 Z" fill="#ffffff" />
+      <circle cx="84" cy="26" r="2.8" fill="#0a0a0a" />
+      <path d="M14 28 C6 26, 6 34, 14 32" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round"/>
+    </g>
   </svg>
+</div>
 
-  <!-- Page wrapper (centered narrow column) -->
-  <div id="page-wrapper">
+<!-- Page container -->
+<main id="page-wrapper" role="main">
+  <!-- ABOUT -->
+  <section id="about" class="center">
+    <div class="about-inner">
+      <!-- image stack with liquify SVG filter applied to back image -->
+      <div class="about-img-container" id="imgStack" aria-hidden="false">
+        <svg width="0" height="0" style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
+          <filter id="liquify-filter" x="-20%" y="-20%" width="140%" height="140%">
+            <!-- turbulence with ID used by JS -->
+            <feTurbulence id="turb" baseFrequency="0 0" numOctaves="2" seed="3" />
+            <feDisplacementMap in="SourceGraphic" scale="0" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+        </svg>
 
-    <!-- ABOUT (page starts here) -->
-    <section class="center" id="about">
-      <div class="about-inner">
-        <!-- Image stack: back (bigger) + front (circular mask) -->
-        <div class="about-img-container">
-          <div class="img-stack" id="imgStack">
-            <img class="img-back" id="profileBack" src="asset\img\InShot_20220710_162248085.jpg" alt="Profile back" />
-            <img class="img-front" id="profileFront" src="asset\img\InShot_20220710_162248085.jpg" alt="Profile front" />
-          </div>
+        <div class="img-stack">
+          <!-- Back image (revealed on hover). Replace src with your real image filename -->
+          <img id="profileBack" class="img-back" src="profile-back.jpg" alt="Profile back image" />
+          <!-- Front image mask (top) -->
+          <img class="img-front" src="profile-front.jpg" alt="Profile front image" />
         </div>
+      </div>
 
-        <h2 class="gradient">Tabassum Islam Mim</h2>
-
-        <ul class="about-social-container">
-          <li><img src="./asset/svg/github.svg" alt="github"/><a href="https://github.com/Mimimomo001" target="_blank" rel="noopener noreferrer">Github</a></li>
-          <li><img src="./asset/svg/mail.svg" alt="mail"/><a href="mailto:ti707mim@gmail.com">Mail</a></li>
-          <li>
-            <img src="./asset/svg/linkedin.svg" alt="linkedin"/>
-            <a href="https://www.linkedin.com/in/timim0" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-          </li>
-        </ul>
-
+      <div class="name">
+        <div class="gradient">Mimimomo</div>
         <p class="bio">
-          Computer Science and Engineering graduate specializing in Computer Vision, Artificial Intelligence, Machine Learning, and Deep Learning. Former paid Intern at the ICT Cell, Bridges Division, Government of the People’s Republic of Bangladesh. Erasmus+ scholar at Istanbul Kültür University. Strong background in AI-driven application development and secure system design.
+          Computer Science and Engineering graduate specializing in Computer Vision, Artificial Intelligence, Machine Learning, and Deep Learning. Former paid Intern at the ICT Cell, Bridges Division, Government of the People’s Republic of Bangladesh. Erasmus+ scholar at Istanbul Kültür University.
         </p>
 
-        <!-- Quote (unchanged) -->
-        <div class="current-quote">“You got two legs and a heart beat. What's stopping you? - Inuyasha”</div>
-        
-        <div class="cv-actions">
-          <a href="asset\img\Tabassum Islam Mim.pdf" target="_blank" class="cv-btn outline">
-            View CV
-          </a>
-        </div>
-        
-
-        <!-- Skills (plain text items - no links) -->
-        <h3>Skills / Tools</h3>
-        <ul class="skill-grid">
-          <li>Python</li>
-          <li>Java</li>
-          <li>C / C++</li>
-
-          <li>JavaScript</li>
-          <li>Computer Vision</li>
-          <li>Machine Learning / Deep Learning</li>
-
-          <li>TensorFlow</li>
-          <li>PyTorch</li>
-          <li>Scikit-learn</li>
-
-          <li>NumPy</li>
-          <li>Pandas</li>
-          <li>Matplotlib / Seaborn</li>
-
-          <li>Explainable AI (Grad-CAM, SHAP, LIME)</li>
-          <li>Retrieval-Augmented Generation (RAG)</li>
-          <li>Jupyter / Notebooks</li>
-
-          <li>Git</li>
-          <li>VS Code</li>
-          <li>GitHub</li>
+        <ul class="about-social-container">
+          <li><img src="icons/github.svg" alt="" /> <a href="#" class="ext">GitHub</a></li>
+          <li><img src="icons/linkedin.svg" alt="" /> <a href="#" class="ext">LinkedIn</a></li>
         </ul>
+
+        <div class="cv-actions">
+          <a class="cv-btn outline" href="#" download>View CV</a>
+          <a class="cv-btn solid" href="#" download>Download CV</a>
+        </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- PROJECTS -->
-    <section class="center" id="project">
-      <h2>Projects</h2>
+  <!-- PROJECTS -->
+  <section id="projects" class="center">
+    <h2>Projects</h2>
+    <div class="project-container single-column">
+      <article class="repository-card">
+        <div class="repository-head">
+          <h3>Project One</h3>
+          <div class="tags">AI · CV</div>
+        </div>
+        <p>A short description of the project goes here. Replace with your actual project text.</p>
+        <a class="ext" href="#" aria-label="Open repository">Open</a>
+      </article>
 
-      <div class="project-container single-column">
-        <article class="repository-card">
-          <div class="repository-head">
-            <h3>BrainT_XAI_RAG</h3>
-            <a class="ext" href="https://github.com/Mimimomo001/BrainT_X-AI_RAG" target="_blank" rel="noopener noreferrer">↗</a>
-          </div>
-          <p>Explainable Vision AI pipeline for brain tumor detection using EfficientNetB3, Grad-CAM and a Visual RAG layer. Achieved ~91.5% accuracy.</p>
-          <div class="tags">Python · TensorFlow / PyTorch</div>
-        </article>
+      <article class="repository-card">
+        <div class="repository-head">
+          <h3>Project Two</h3>
+          <div class="tags">ML · Research</div>
+        </div>
+        <p>Another project description. Replace with real content.</p>
+        <a class="ext" href="#" aria-label="Open repository">Open</a>
+      </article>
 
-        <article class="repository-card">
-          <div class="repository-head">
-            <h3>Dental Segmentation (FastViT)</h3>
-            <a class="ext" href="https://github.com/Mimimomo001/Dental-Semantic-Segmentation-using-FastViT" target="_blank" rel="noopener noreferrer">↗</a>
-          </div>
-          <p>Semantic segmentation for dental caries using FastViT; 92.5% pixel accuracy and 79.25% mIoU.</p>
-          <div class="tags">PyTorch · TIMM</div>
-        </article>
+      <a class="more-repo" href="#">More repositories →</a>
+    </div>
+  </section>
 
-        <article class="repository-card">
-          <div class="repository-head">
-            <h3>Explaining Breast Cancer Predictions (SHAP)</h3>
-            <a class="ext" href="https://github.com/Mimimomo001/Explaining-Breast-Cancer-Diagnosis-Predictions-with-SHAP" target="_blank" rel="noopener noreferrer">↗</a>
-          </div>
-          <p>Interpreted a breast cancer classification model using SHAP and produced feature-importance visualizations.</p>
-          <div class="tags">SHAP · Scikit-learn</div>
-        </article>
+  <!-- SKILLS -->
+  <section id="skills" class="center">
+    <h2>Skills</h2>
+    <ul class="skill-grid">
+      <li>Python</li>
+      <li>Deep Learning</li>
+      <li>Computer Vision</li>
+      <li>Data Mining</li>
+      <li>Docker</li>
+      <li>Git</li>
+    </ul>
+  </section>
 
-        <article class="repository-card">
-          <div class="repository-head">
-            <h3>Similarity Search App (RAG)</h3>
-            <a class="ext" href="https://github.com/Mimimomo001/Similarity-Search-App-Using-Retrieval-Augmented-Generation--RAG-" target="_blank" rel="noopener noreferrer">↗</a>
-          </div>
-          <p>Streamlit + ChromaDB RAG app for citation-aware QA and similarity search over documents.</p>
-          <div class="tags">Streamlit · ChromaDB</div>
-        </article>
-
-        <div class="more-repo">more at <a href="https://github.com/Mimimomo001?tab=repositories" target="_blank" rel="noopener noreferrer">GITHUB</a></div>
-      </div>
-    </section>
-
-    <!-- EDUCATION -->
-    <section class="center" id="education">
-      <h2>Education</h2>
-      <p><strong>BSc in Computer Science & Engineering</strong><br/>
-      <a href="https://daffodilvarsity.edu.bd/" target="_blank" rel="noopener noreferrer">Daffodil International University</a> (June 2020 – Sept 2024). Final grade: 3.53 / 4.00.</p>
-    </section>
-
-    <!-- RESEARCH -->
-    <section class="center" id="research">
-      <h2>Thesis & Research</h2>
-      <p><a href="http://dspace.daffodilvarsity.edu.bd:8080/handle/123456789/14541" target="_blank" rel="noopener noreferrer"><strong>LRMC-DeepLabV3+: Multiclass Leaf Disease Semantic Segmentation</strong></a> — proposed an improved DeepLabV3+ model evaluated on six plant leaf classes; reported 97.34% accuracy and 93.47% mIoU. Roles: methodology, coding, dataset curation, and first authorship.</p>
-    </section>
-
-    <!-- EXPERIENCE -->
-    <section class="center" id="experience">
-      <h2>Experience</h2>
-      <p><strong>Paid Intern (ICT)</strong> — <a href="https://bridgesdivision.gov.bd/" target="_blank" rel="noopener noreferrer">Government Bridges Division</a> (31 Mar 2025 – 30 Jun 2025). Supported ICT operations and digital infrastructure at the Bridges Division.</p>
-    </section>
-
-    <!-- CERTIFICATIONS -->
-    <section class="center" id="news">
-      <h2>Certifications</h2>
-      <ul class="compact-list">
-        <li><a href="https://drive.google.com/file/d/1U3oof43sQ8RiPn4jwTYaRGPj4GTE2eh8/view?usp=drive_link" target="_blank" rel="noopener noreferrer"><u>Creating AI Applications using RAG</u></a> — Codecademy</li>
-        <li><a href="https://drive.google.com/file/d/1jhELve9UQVvc5oQbKMSkUfMeKWtjqCzc/view?usp=drive_link" target="_blank" rel="noopener noreferrer"><u>Learn Explainable AI</u></a> — Codecademy</li>
-        <li><a href="https://drive.google.com/file/d/1W-3IIJKcxyIBL0qnv5cYOrN300XZ6gPk/view?usp=drive_link" target="_blank" rel="noopener noreferrer"><u>Generative AI on AWS</u></a> — Codecademy</li>
-        <li><a href="https://drive.google.com/file/d/16ZNXp_tp--YhFORPn4dL_m7QkipFdeCC/view?usp=drive_link" target="_blank" rel="noopener noreferrer"><u>Advanced Algorithms & Data Structures with Python</u></a> — Codecademy</li>
-      </ul>
-    </section>
-
-    <!-- ACTIVITIES -->
-    <section class="center" id="activities">
-      <h2>Extracurriculars & Awards</h2>
-      <ul class="extras-list">
-        <li>Erasmus+ KA107 Scholar (2022) — Istanbul Kültür University (34 ECTS)</li>
-        <li>Member — Computer & Programming Club (CPC), Daffodil International University</li>
-        <li>Presenter — IEEE CS BDC Summer Symposium (2023)</li>
-        <li>Second Runner Up — Cyber Security Awareness Project (2023)</li>
-      </ul>
-
-      <h3>Languages</h3>
-      <ul class="compact-list">
-        <li>Bangla (Native)</li>
-        <li>English (IELTS 7.5 | CEFR C1)</li>
-      </ul>
-
-      <h3>Hobbies</h3>
-      <ul class="compact-list">
-        <li>Gaming</li>
-        <li>Music</li>
-        <li>Anime</li>
-        <li>Cooking</li>
-      </ul>
-    </section>
-
-
-    <footer id="contact" class="center">
-      <p>© <script>document.write(new Date().getFullYear());</script> Built by <a href="https://github.com/Mimimomo001" target="_blank" rel="noopener noreferrer">Mimimomo001</a></p>
+  <!-- CONTACT -->
+  <section id="contact" class="center">
+    <h2>Contact</h2>
+    <p class="current-quote">Open for collaborations, research, and talks.</p>
+    <footer>
+      <p>© <span id="year"></span> Mimimomo — All rights reserved.</p>
     </footer>
+  </section>
+</main>
 
-  </div>
+<!-- Load event-effect.js (responsible for interactions) -->
+<script src="event-effect.js" defer></script>
 
-  <div id="fish" aria-hidden="true">
-    <svg
-      fill="#272869"
-      version="1.1"
-      id="Layer_1"
-      xmlns="http://www.w3.org/2000/svg"
-      xmlns:xlink="http://www.w3.org/1999/xlink"
-      viewBox="0 0 256 256"
-      enable-background="new 0 0 256 256"
-      xml:space="preserve"
-    >
-      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-      <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-      <g id="SVGRepo_iconCarrier">
-        <path d="M244.311,143.467c0,0-173.441,0-174.859,0c-19.77,0-35.7-15.792-35.7-35.562c0-9.787,3.938-18.648,10.299-25.116
-          l23.137,23.137c13.4,13.4,35.129,13.4,48.529,0L80.401,70.609c-8.369-8.359-21.424-9.127-30.679-2.353
-          c6.774-9.255,6.006-22.31-2.353-30.679L12.052,2.261c-13.4,13.4-13.4,35.129,0,48.529l20.646,20.646
-          C13.569,88.302,2,110.218,2,134.192C2,187.073,58.297,230,128.024,230.571c0,0,0,23.167,0,23.167
-          c0,0,11.076,0.246,20.38-7.489c7.036-5.85,11.127-14.865,11.127-24.017V193.7
-          c12.721-3.013,33.219-9.816,49.386-26.603h7.827
-          c-10.279,13.577-30.837,25.884-51.306,31.191v11.194
-          c29.163-7.246,52.251-22.832,64.607-42.385h6.862
-          c-12.829,22.625-38.595,40.633-71.47,48.46v6.675
-          c0,1.516-0.098,3.003-0.276,4.47c43.931-9.698,78.056-36.773,88.414-70.751
-          C255.466,149.739,250.799,143.467,244.311,143.467z
-          M178.355,171.114h-4.874c-2.176,0-3.938-1.762-3.938-3.938
-          c0-2.176,1.762-3.938,3.938-3.938h4.874c2.176,0,3.938,1.762,3.938,3.938
-          C182.293,169.351,180.531,171.114,178.355,171.114z">
-        </path>
-      </g>
-    </svg>
-  </div>
-  
-  
-  
-  
-  
-  <!-- Local script -->
-  <script src="./script/event-effect.js" defer></script>
+<!-- small script to set year -->
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
-
-

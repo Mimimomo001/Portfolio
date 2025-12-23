@@ -1,3 +1,6 @@
+/* Updated styles.css — responsive / dynamic adjustments added */
+
+/* Root: responsive sidebar sizes and base scales */
 :root{
   --bg: #e0edf5;
   --beige: #091727;
@@ -7,7 +10,23 @@
   --muted: #2a3069;
   --card: #6491c0;
   font-family: "Work Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+
+  /* responsive widths: collapsed and open sidebar */
+  --sidebar-collapsed: clamp(48px, 6.5vw, 72px);
+  --sidebar-open: clamp(180px, 28vw, 320px);
+
+  /* page wrapper max width responsive */
+  --page-max: clamp(320px, 60ch, 880px);
+
+  /* responsive image stack size */
+  --profile-size: clamp(120px, 18vw, 180px);
+
+  /* fish size */
+  --fish-w: clamp(46px, 6.5vw, 80px);
+  --fish-h: calc(var(--fish-w) / 2);
 }
+
+/* ---- existing rules mostly preserved, only widths replaced with variables ---- */
 
 *{box-sizing:border-box}
 html,body{height:100%}
@@ -17,6 +36,8 @@ body{
   color:var(--text);
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
+  /* responsive base font-size */
+  font-size: clamp(14px, 1.2vw, 16px);
 }
 
 /* HAMBURGER BUTTON (top-left) */
@@ -36,16 +57,17 @@ body{
 }
 
 /* When sidebar is open, move hamburger to the right edge of the sidebar */
+/* now uses the responsive variable */
 #sidebar.open ~ .hamburger,
 .hamburger.move-right {
-  left:238px;
+  left: calc(var(--sidebar-open) + 18px);
 }
 
 /* SIDEBAR */
 #sidebar{
   position:fixed;
   left:0; top:0; bottom:0;
-  width:72px; /* collapsed width - only icon area visible */
+  width: var(--sidebar-collapsed); /* collapsed width - only icon area visible */
   background:var(--beige);
   z-index:1200;
   overflow:hidden;
@@ -57,13 +79,13 @@ body{
 
 /* Expanded */
 #sidebar.open{
-  width:220px;
+  width: var(--sidebar-open);
   box-shadow: 6px 0 24px rgba(0,0,0,0.06);
 }
 
 /* inner area */
 .sidebar-inner{ width:100%; padding:0 12px; }
-.logo h2{ font-family:"Montserrat",sans-serif; font-weight:900; font-size:18px; color:var(--bg); line-height:1; margin:0 0 12px 0; letter-spacing:0.6px; }
+.logo h2{ font-family:"Montserrat",sans-serif; font-weight:900; font-size:clamp(14px,2.6vw,18px); color:var(--bg); line-height:1; margin:0 0 12px 0; letter-spacing:0.6px; }
 
 /* links */
 .sidebar-links{ list-style:none; padding:0; margin:0; }
@@ -87,14 +109,14 @@ body{
 
 /* PAGE WRAPPER (center column) */
 #page-wrapper{
-  max-width:880px;
+  max-width: var(--page-max);
   margin:0 auto;
   padding:28px 20px;
 }
 
 /* sections baseline */
 .center{
-  max-width:820px;
+  max-width:calc(var(--page-max) - 40px);
   margin:0 auto;
   padding-top:12px;
   padding-bottom:12px;
@@ -103,9 +125,16 @@ body{
 /* About */
 .about-inner{ text-align:center; }
 
-/* ABOUT IMAGE stack: larger circle + liquify pseudo */
-.about-img-container { margin: 0 auto 8px; width:180px; height:180px; display:flex; align-items:center; justify-content:center; }
-.img-stack { position:relative; width:180px; height:180px; }
+/* ABOUT IMAGE stack: responsive circle + liquify pseudo */
+.about-img-container {
+  margin: 0 auto 8px;
+  width: var(--profile-size);
+  height: var(--profile-size);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.img-stack { position:relative; width:100%; height:100%; }
 .img-stack img { position:absolute; left:0; top:0; width:100%; height:100%; object-fit:cover; border-radius:50%; display:block; }
 
 /* back image is slightly larger to reveal when front mask contracts */
@@ -124,17 +153,17 @@ body{
 .img-stack:hover .img-back { filter: url(#liquify-filter); }
 
 /* gradient name */
-.gradient{ font-family:"Montserrat",sans-serif; font-weight:800; font-size:36px; color:var(--accent); margin:14px 0; letter-spacing:0.6px; }
+.gradient{ font-family:"Montserrat",sans-serif; font-weight:800; font-size:clamp(20px,4vw,36px); color:var(--accent); margin:14px 0; letter-spacing:0.6px; }
 .about-social-container{ list-style:none; display:flex; gap:20px; justify-content:center; padding:0; margin:8px 0 12px; }
 .about-social-container li{ display:flex; gap:8px; align-items:center; color:var(--muted); font-weight:700; }
-.about-social-container img{ width:18px; height:18px; opacity:0.95; }
+.about-social-container img{ width:18px; height:18px; opacity:0.95; max-width:18px; }
 
 /* Links: theme colors (warm browns) */
 a { color:var(--muted); text-decoration:none; }
 a:hover { color:var(--beige); text-decoration:underline; }
 
 /* BIO & QUOTE */
-.bio{ color:var(--muted); line-height:1.6; font-size:15px; max-width:760px; margin:0 auto 10px; text-align:justify; }
+.bio{ color:var(--muted); line-height:1.6; font-size:clamp(13px,1.1vw,15px); max-width:760px; margin:0 auto 10px; text-align:justify; }
 .current-quote{
   max-width:340px; margin:14px auto; padding:12px 14px; border-radius:12px; background:rgb(154, 180, 236);
   box-shadow:0 18px 36px rgba(0,0,0,0.06); font-style:italic; color:var(--muted);
@@ -214,19 +243,19 @@ a.ext {
 .compact-list, .extras-list{ list-style:disc; margin-left:1.1rem; color:var(--muted); }
 
 /* headings */
-h2{ font-family:"Montserrat",sans-serif; font-weight:900; font-size:28px; color:var(--text); margin:8px 0; }
-h3{ font-family:"Montserrat",sans-serif; font-weight:700; font-size:18px; color:var(--text); margin:6px 0; }
+h2{ font-family:"Montserrat",sans-serif; font-weight:900; font-size:clamp(20px,3.2vw,28px); color:var(--text); margin:8px 0; }
+h3{ font-family:"Montserrat",sans-serif; font-weight:700; font-size:clamp(16px,2.4vw,18px); color:var(--text); margin:6px 0; }
 
 /* footer */
 footer{ text-align:center; color:var(--muted); margin-top:12px; padding-bottom:28px; }
 
-/* Fish styles: bigger than cursor, white */
+/* Fish styles: bigger than cursor, white; now responsive */
 #fish{
   position:fixed;
   left:50%;
   top:50%;
-  width:80px;   /* slightly bigger than cursor */
-  height:40px;
+  width: var(--fish-w);   /* responsive width */
+  height: var(--fish-h);
   pointer-events:none; /* must not block clicks */
   z-index:1600;
   transform-origin:center center;
@@ -236,18 +265,35 @@ footer{ text-align:center; color:var(--muted); margin-top:12px; padding-bottom:2
 }
 #fish svg{ display:block; width:100%; height:100%; }
 
-/* Responsive */
+/* Responsive adjustments */
 @media (max-width:920px){
-  #sidebar{ width:56px; }
+  /* scale sidebar collapsed width a bit smaller via variable already set */
+  #sidebar{ width:var(--sidebar-collapsed); }
   #sidebar.open{ width:72%; }
   #page-wrapper{ padding-left:18px; padding-right:18px; }
   .skill-grid{ grid-template-columns:repeat(2,1fr); }
   .repository-card{ width:92%; }
-  .about-img-container { width:160px; height:160px; }
-  .img-stack { width:160px; height:160px; }
+  /* make profile smaller on narrow screens */
+  :root { --profile-size: clamp(120px, 18vw, 160px); --fish-w: clamp(34px, 9vw, 56px); }
+  .about-img-container { width:var(--profile-size); height:var(--profile-size); }
+  .img-stack { width:100%; height:100%; }
   .img-stack img { border-radius:50%; }
+}
+
+/* Very small phones */
+@media (max-width:420px) {
+  :root {
+    --page-max: 320px;
+    --profile-size: 120px;
+    --sidebar-open: 220px;
+  }
+  .skill-grid{ grid-template-columns:1fr; gap:8px 14px; }
+  .repository-card{ width:100%; padding:14px; }
+  .gradient{ font-size: clamp(18px, 6.5vw, 28px); }
+  /* hide fish entirely on very small devices to avoid coverage */
+  #fish { display: none; }
 }
 
 /* When #sidebar has .open, move hamburger to the right side of sidebar */
 #sidebar.open ~ .hamburger,
-.hamburger.move-right { left:238px; }
+.hamburger.move-right { left: calc(var(--sidebar-open) + 18px); }
