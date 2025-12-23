@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Portfolio — Responsive</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Portfolio — Responsive (Mobile-first)</title>
 
   <!-- Link to responsive stylesheet -->
   <link rel="stylesheet" href="styles.css" />
@@ -21,7 +21,7 @@
 </script>
 
 <!-- Sidebar -->
-<aside id="sidebar" class="collapsed" aria-hidden="true">
+<aside id="sidebar" class="collapsed" aria-hidden="true" role="navigation">
   <div class="sidebar-inner">
     <div class="logo">
       <h2>My Portfolio</h2>
@@ -37,6 +37,9 @@
     </nav>
   </div>
 </aside>
+
+<!-- Overlay (for mobile when sidebar is open) -->
+<div id="page-overlay" aria-hidden="true"></div>
 
 <!-- Hamburger / sidebar toggle -->
 <button id="sidebar-toggle" class="hamburger" aria-label="Toggle menu" title="Toggle menu">
@@ -64,13 +67,13 @@
       <div class="about-img-container" id="imgStack" aria-hidden="false">
         <svg width="0" height="0" style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
           <filter id="liquify-filter" x="-20%" y="-20%" width="140%" height="140%">
-            <!-- turbulence with ID used by JS -->
-            <feTurbulence id="turb" baseFrequency="0 0" numOctaves="2" seed="3" />
+            <!-- turbulence with ID used by JS (low intensity/default) -->
+            <feTurbulence id="turb" baseFrequency="0 0" numOctaves="1" seed="3" />
             <feDisplacementMap in="SourceGraphic" scale="0" xChannelSelector="R" yChannelSelector="G" />
           </filter>
         </svg>
 
-        <div class="img-stack">
+        <div class="img-stack" style="filter:none;">
           <!-- Back image (revealed on hover). Replace src with your real image filename -->
           <img id="profileBack" class="img-back" src="profile-back.jpg" alt="Profile back image" />
           <!-- Front image mask (top) -->
