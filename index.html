@@ -1,212 +1,144 @@
-/* styles.css — changed mobile sidebar behavior: hidden when closed, only hamburger visible.
-   Desktop collapsed bar preserved. Visual tokens are unchanged. */
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Portfolio — Responsive</title>
 
-/* Root tokens (unchanged visual values) */
-:root{
-  --bg: #e0edf5;
-  --beige: #091727;
-  --accent: #275988;
-  --accent-dark: #2f56aa;
-  --text: #162747;
-  --muted: #2a3069;
-  --card: #6491c0;
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Work+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body id="top">
 
-  --sidebar-collapsed: 72px; /* desktop small bar width */
-  --sidebar-open: 320px;
-
-  --page-max: 880px;
-  --profile-size: 180px;
-  --fish-w: 80px;
-  --fish-h: 40px;
-}
-
-/* base */
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  font-family: "Work Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
-  font-size: 16px;
-}
-
-/* HAMBURGER: same visuals; visible by default. When sidebar is open, hide it. */
-.hamburger{
-  position:fixed;
-  left:12px;
-  top: calc(12px + env(safe-area-inset-top));
-  z-index:1400;
-  background:transparent;
-  border:0;
-  font-size:20px;
-  color:var(--bg);
-  cursor:pointer;
-  padding:6px 8px;
-  border-radius:6px;
-  transition: left 220ms ease, opacity 180ms ease;
-}
-
-/* SIDEBAR base (desktop-first) */
-#sidebar{
-  position:fixed;
-  left:0; top:0; bottom:0;
-  width: var(--sidebar-collapsed);
-  background:var(--beige);
-  z-index:1200;
-  overflow:hidden;
-  transition: width 220ms ease, box-shadow 220ms ease, transform 260ms ease;
-  display:flex;
-  align-items:flex-start;
-  padding-top:22px;
-}
-
-/* Desktop collapsed behavior preserves the thin bar */
-#sidebar.collapsed {
-  transform: none; /* visible thin bar on desktop */
-}
-
-/* When open on desktop or large screens */
-#sidebar.open {
-  width: var(--sidebar-open);
-  box-shadow: 6px 0 24px rgba(0,0,0,0.06);
-}
-
-/* Inner area and links (visuals unchanged) */
-.sidebar-inner{ width:100%; padding:0 12px; }
-.logo h2{ font-family:"Montserrat",sans-serif; font-weight:900; font-size:18px; color:var(--bg); line-height:1; margin:0 0 12px 0; letter-spacing:0.6px; }
-.sidebar-links{ list-style:none; padding:0; margin:0; }
-.sidebar-links li{ margin:12px 0; }
-.sidebar-links a{ color:var(--bg); text-decoration:none; display:block; padding:8px 6px; font-weight:700; border-radius:6px; }
-.sidebar-links a:hover{ background:rgba(0,0,0,0.03); color:var(--accent-dark); }
-#sidebar.collapsed .logo h2,
-#sidebar.collapsed .sidebar-links a{
-  opacity:0;
-  transform:translateX(-6px);
-  transition: opacity 180ms ease, transform 180ms ease;
-}
-#sidebar.open .logo h2,
-#sidebar.open .sidebar-links a{
-  opacity:1;
-  transform:none;
-  transition: opacity 200ms ease, transform 200ms ease;
-}
-
-/* Page wrapper default (desktop) */
-#page-wrapper{
-  max-width: var(--page-max);
-  margin:0 auto;
-  padding:28px 20px;
-  transition: padding-left 220ms ease;
-}
-
-/* Desktop: account for collapsed thin sidebar */
-@media (min-width:920px){
-  #page-wrapper { padding-left: calc(var(--sidebar-collapsed) + 20px); }
-}
-
-/* Overlay for when sidebar is open on mobile */
-#page-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.32);
-  z-index: 1190; /* below sidebar but above content */
-  display: none;
-  opacity: 0;
-  transition: opacity 220ms ease;
-}
-#sidebar.open ~ #page-overlay {
-  display: block;
-  opacity: 1;
-}
-
-/* === MOBILE: hide collapsed sidebar (no blue bar) and show only hamburger when closed === */
-@media (max-width:920px) {
-  /* hide the thin bar by default (moved off-screen when closed) */
-  #sidebar {
-    width: var(--sidebar-open); /* width when open */
-    transform: translateX(-100%); /* hidden off-screen by default */
+<script>
+  // tiny helper for touch-targeting in CSS (non-visual)
+  if (('ontouchstart' in window) || (navigator.maxTouchPoints && navigator.maxTouchPoints > 0)) {
+    document.documentElement.classList.add('has-touch');
   }
+</script>
 
-  /* when open, translate to visible */
-  #sidebar.open {
-    transform: translateX(0);
-  }
+<!-- Sidebar -->
+<aside id="sidebar" class="collapsed" aria-hidden="true" role="navigation">
+  <div class="sidebar-inner">
+    <div class="logo">
+      <h2>My Portfolio</h2>
+    </div>
 
-  /* Ensure hamburger is visible when sidebar is closed, and hidden when open */
-  #sidebar.open ~ .hamburger,
-  .hamburger.hidden-when-open { display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; }
+    <nav>
+      <ul class="sidebar-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</aside>
 
-  /* Do not pad the page for a sidebar when closed — content uses full width */
-  #page-wrapper { padding-left: 18px; padding-right: 18px; }
+<!-- Overlay used when sidebar is open on mobile -->
+<div id="page-overlay" aria-hidden="true"></div>
 
-  /* reduce some widths to fit small screens (visual choices preserved) */
-  :root { --profile-size: clamp(120px, 18vw, 160px); --fish-w: clamp(34px, 9vw, 56px); }
-  .skill-grid{ grid-template-columns:repeat(2,1fr); }
-  .repository-card{ width:92%; }
-  .about-img-container { width:var(--profile-size); height:var(--profile-size); }
-  .img-stack { width:100%; height:100%; }
-  .img-stack img { border-radius:50%; }
-}
+<!-- Hamburger / sidebar toggle -->
+<button id="sidebar-toggle" class="hamburger" aria-label="Toggle menu" title="Toggle menu">
+  ☰
+</button>
 
-/* small phones */
-@media (max-width:420px) {
-  :root { --page-max: 320px; --profile-size: 120px; --sidebar-open: 220px; }
-  .skill-grid{ grid-template-columns:1fr; gap:8px 14px; }
-  .repository-card{ width:100%; padding:14px; }
-  .gradient{ font-size: clamp(18px, 6.5vw, 28px); }
-  #fish { display: none; }
-}
+<!-- Fish cursor (unchanged) -->
+<div id="fish" aria-hidden="true">
+  <svg viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+    <g transform="translate(0,0)">
+      <path d="M6 30 C20 14, 50 6, 80 12 C110 18, 110 42, 80 48 C50 54, 20 46, 6 30 Z" fill="#ffffff" />
+      <circle cx="84" cy="26" r="2.8" fill="#0a0a0a" />
+      <path d="M14 28 C6 26, 6 34, 14 32" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round"/>
+    </g>
+  </svg>
+</div>
 
-/* rest of your visual CSS preserved unchanged (bio, buttons, etc.) */
+<!-- Page container -->
+<main id="page-wrapper" role="main">
+  <section id="about" class="center">
+    <div class="about-inner">
+      <div class="about-img-container" id="imgStack" aria-hidden="false">
+        <svg width="0" height="0" style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
+          <filter id="liquify-filter" x="-20%" y="-20%" width="140%" height="140%">
+            <feTurbulence id="turb" baseFrequency="0 0" numOctaves="2" seed="3" />
+            <feDisplacementMap in="SourceGraphic" scale="0" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+        </svg>
 
-/* sections baseline */
-.center{ max-width:calc(var(--page-max) - 40px); margin:0 auto; padding-top:12px; padding-bottom:12px; }
-.about-inner{ text-align:center; }
-.about-img-container { margin: 0 auto 8px; width: var(--profile-size); height: var(--profile-size); display:flex; align-items:center; justify-content:center; }
-.img-stack { position:relative; width:100%; height:100%; }
-.img-stack img { position:absolute; left:0; top:0; width:100%; height:100%; object-fit:cover; border-radius:50%; display:block; }
-.img-back { transform: scale(1.12); transition: transform 280ms cubic-bezier(.2,.9,.2,1), filter 220ms ease; filter: none; }
-.img-front { z-index:3; box-shadow: 0 10px 24px rgba(0,0,0,0.08); border:4px solid rgba(255, 255, 255, 0); transition: clip-path 260ms cubic-bezier(.2,.9,.2,1), transform 260ms ease; }
-.img-front { clip-path: circle(50% at 50% 50%); }
-.img-stack:hover .img-front { clip-path: circle(38% at 50% 50%); transform: translateZ(0.01px); }
-.img-stack:hover .img-back { transform: scale(1.15); }
-.img-stack:hover .img-back { filter: url(#liquify-filter); }
+        <div class="img-stack">
+          <img id="profileBack" class="img-back" src="profile-back.jpg" alt="Profile back image" />
+          <img class="img-front" src="profile-front.jpg" alt="Profile front image" />
+        </div>
+      </div>
 
-.gradient{ font-family:"Montserrat",sans-serif; font-weight:800; font-size:clamp(20px,4vw,36px); color:var(--accent); margin:14px 0; letter-spacing:0.6px; }
-.about-social-container{ list-style:none; display:flex; gap:20px; justify-content:center; padding:0; margin:8px 0 12px; }
-.about-social-container li{ display:flex; gap:8px; align-items:center; color:var(--muted); font-weight:700; }
-.about-social-container img{ width:18px; height:18px; opacity:0.95; max-width:18px; }
-a { color:var(--muted); text-decoration:none; }
-a:hover { color:var(--beige); text-decoration:underline; }
-.bio{ color:var(--muted); line-height:1.6; font-size:clamp(13px,1.1vw,15px); max-width:760px; margin:0 auto 10px; text-align:justify; }
-.current-quote{ max-width:340px; margin:14px auto; padding:12px 14px; border-radius:12px; background:rgb(154, 180, 236); box-shadow:0 18px 36px rgba(0,0,0,0.06); font-style:italic; color:var(--muted); }
-.cv-actions { margin-top: 1.2rem; display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3.5rem; }
-.cv-btn { font-family: inherit; font-weight: 500; font-size: 0.85rem; padding: 0.45rem 1.1rem; border-radius: 14px; text-decoration: none; transition: all 0.25s ease; letter-spacing: 0.2px; }
-#about { padding-bottom: 4rem; }
-.cv-btn.outline { color: var(--text); background: rgba(100, 144, 192, 0); border: 3px solid rgba(22, 39, 71, 0.15); }
-.cv-btn.outline:hover { background: rgba(100, 145, 192, 0.4); transform: translateY(-1px); }
-.cv-btn.solid { color: var(--text); background: rgba(71, 110, 218, 0.45); border: 1px solid rgba(22, 39, 71, 0); }
-.cv-btn.solid:hover { background: rgba(100, 145, 192, 0.65); transform: translateY(-1px); }
-.skill-grid{ list-style:none; display:grid; grid-template-columns:repeat(3, 1fr); gap:6px 26px; padding:0; margin:8px 0 20px; text-align:left; }
-.skill-grid li{ position:relative; padding-left:12px; color:var(--muted); font-weight:700; font-size:15px; line-height:1.6; }
-.skill-grid li::before{ content:"•"; position:absolute; left:0; top:0; color:var(--accent); font-weight:900; }
-.project-container.single-column{ display:flex; flex-direction:column; gap:18px; align-items:center; margin-top:6px; }
-.repository-card{ width:360px; background:var(--text); border-radius:10px; padding:16px; box-shadow:0 10px 24px rgba(0,0,0,0.04); }
-.repository-head{ display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:8px; }
-.repository-head h3{ margin:0; font-family:"Montserrat",sans-serif; font-weight:700; font-size:16px; color:var(--bg); }
-.repository-card p{ margin:0 0 10px 0; color:var(--bg); line-height:1.6; font-size:13px; }
-.tags{ color:var(--bg); font-weight:700; font-size:13px; }
-a.ext { color: #ffffff; }
-.more-repo{ margin-top:10px; font-weight:700; color:var(--accent); }
-h2{ font-family:"Montserrat",sans-serif; font-weight:900; font-size:clamp(20px,3.2vw,28px); color:var(--text); margin:8px 0; }
-h3{ font-family:"Montserrat",sans-serif; font-weight:700; font-size:clamp(16px,2.4vw,18px); color:var(--text); margin:6px 0; }
-footer{ text-align:center; color:var(--muted); margin-top:12px; padding-bottom:28px; }
+      <div class="name">
+        <div class="gradient">Tabassum Islam Mim</div>
+        <p class="bio">
+          Computer Science and Engineering graduate specializing in Computer Vision, Artificial Intelligence, Machine Learning, and Deep Learning. Former paid Intern at the ICT Cell, Bridges Division, Government of the People’s Republic of Bangladesh. Erasmus+ scholar at Istanbul Kültür University.
+        </p>
 
-/* Fish styles preserved unchanged */
-#fish{ position:fixed; left:50%; top:50%; width: var(--fish-w); height: var(--fish-h); pointer-events:none; z-index:1600; transform-origin:center center; transform: translate(-50%, -50%) rotate(0deg) scale(1); transition: opacity 180ms ease; opacity:1; }
-#fish svg{ display:block; width:100%; height:100%; }
+        <ul class="about-social-container">
+          <li><img src="icons/github.svg" alt="" /> <a href="#" class="ext">Github</a></li>
+          <li><img src="icons/mail.svg" alt="" /> <a href="#" class="ext">Mail</a></li>
+          <li><img src="icons/linkedin.svg" alt="" /> <a href="#" class="ext">LinkedIn</a></li>
+        </ul>
+
+        <div class="cv-actions">
+          <a class="cv-btn outline" href="#" download>View CV</a>
+          <a class="cv-btn solid" href="#" download>Download CV</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="center">
+    <h2>Projects</h2>
+    <div class="project-container single-column">
+      <article class="repository-card">
+        <div class="repository-head">
+          <h3>Project One</h3>
+          <div class="tags">AI · CV</div>
+        </div>
+        <p>A short description of the project goes here. Replace with your actual project text.</p>
+        <a class="ext" href="#" aria-label="Open repository">Open</a>
+      </article>
+
+      <article class="repository-card">
+        <div class="repository-head">
+          <h3>Project Two</h3>
+          <div class="tags">ML · Research</div>
+        </div>
+        <p>Another project description. Replace with real content.</p>
+        <a class="ext" href="#" aria-label="Open repository">Open</a>
+      </article>
+
+      <a class="more-repo" href="#">More repositories →</a>
+    </div>
+  </section>
+
+  <section id="skills" class="center">
+    <h2>Skills</h2>
+    <ul class="skill-grid">
+      <li>Python</li>
+      <li>Deep Learning</li>
+      <li>Computer Vision</li>
+      <li>Data Mining</li>
+      <li>Docker</li>
+      <li>Git</li>
+    </ul>
+  </section>
+
+  <section id="contact" class="center">
+    <h2>Contact</h2>
+    <p class="current-quote">Open for collaborations, research, and talks.</p>
+    <footer>
+      <p>© <span id="year"></span> Tabassum Islam Mim — All rights reserved.</p>
+    </footer>
+  </section>
+</main>
+
+<script src="event-effect.js" defer></script>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

@@ -1,37 +1,29 @@
-// event-effect.js — updated to hide hamburger from focus and screen readers while sidebar is open.
-// Full interaction logic (sidebar overlay, smooth scroll, liquify, fish cursor, optional ScrollReveal/VanillaTilt)
-
 document.addEventListener("DOMContentLoaded", () => {
-  // Elements
   const sidebar = document.getElementById("sidebar");
   const toggle = document.getElementById("sidebar-toggle");
   const overlay = document.getElementById("page-overlay");
   const imgStack = document.getElementById("imgStack");
-  const turb = document.getElementById("turb"); // feTurbulence element inside the SVG filter
+  const turb = document.getElementById("turb");
   const profileBack = document.getElementById("profileBack");
   const fish = document.getElementById("fish");
 
-  // Feature detection
   const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints && navigator.maxTouchPoints > 0);
   const mobileQuery = window.matchMedia('(max-width:920px)');
 
-  // Helper: safe toggle of body scroll
   function setBodyScroll(enabled) {
     try {
       document.body.style.overflow = enabled ? '' : 'hidden';
-    } catch (e) { /* ignore */ }
+    } catch (e) {}
   }
 
-  // Accessibility helper: hide toggle from assistive tech & tab order when visually hidden.
   function hideToggleForA11y() {
     if (!toggle) return;
     toggle.setAttribute('aria-hidden', 'true');
-    // remove from tab order
     toggle.setAttribute('data-prev-tabindex', toggle.getAttribute('tabindex') || '');
     toggle.setAttribute('tabindex', '-1');
-    // ensure it's not focusable
     toggle.style.pointerEvents = 'none';
   }
+
   function restoreToggleA11y() {
     if (!toggle) return;
     toggle.removeAttribute('aria-hidden');
@@ -42,7 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
     toggle.style.pointerEvents = '';
   }
 
-  // Sidebar open/close
   function openSidebar() {
     if (!sidebar) return;
     sidebar.classList.add("open");
@@ -55,7 +46,6 @@ document.addEventListener("DOMContentLoaded", () => {
       overlay.style.opacity = '1';
     }
     if (mobileQuery.matches || isTouch) setBodyScroll(false);
-    // Hide the hamburger for visual + A11y reasons
     hideToggleForA11y();
   }
 
@@ -72,15 +62,12 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 240);
     }
     setBodyScroll(true);
-    // restore hamburger accessibility
     restoreToggleA11y();
   }
 
-  // On initial load, if sidebar is open (unlikely) ensure toggle hidden
   if (sidebar && sidebar.classList.contains('open')) hideToggleForA11y();
   else restoreToggleA11y();
 
-  // Toggle wiring
   if (toggle) {
     toggle.addEventListener("click", (e) => {
       e.preventDefault();
@@ -89,30 +76,30 @@ document.addEventListener("DOMContentLoaded", () => {
     }, { passive: true });
   }
 
-  // Overlay closes sidebar
   if (overlay) {
-    overlay.addEventListener("click", (e) => {
+    overlay.addEventListener("click", () => {
       closeSidebar();
     }, { passive: true });
   }
 
-  // Close sidebar on Escape key
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && sidebar && sidebar.classList.contains("open")) {
       closeSidebar();
     }
   });
 
-  // Close sidebar when clicking outside on mobile
   document.addEventListener("click", (e) => {
     if (!sidebar) return;
-    const isInside = sidebar.contains(e.target) || (toggle && toggle.contains(e.target)) || (overlay && overlay.contains(e.target));
+    const isInside =
+      sidebar.contains(e.target) ||
+      (toggle && toggle.contains(e.target)) ||
+      (overlay && overlay.contains(e.target));
+
     if (!isInside && sidebar.classList.contains("open") && mobileQuery.matches) {
       closeSidebar();
     }
   }, { passive: true });
 
-  // Smooth scroll for all internal links
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener("click", (ev) => {
       const href = a.getAttribute("href");
@@ -120,7 +107,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const id = href.slice(1);
       const target = document.getElementById(id);
       if (!target) return;
-      // If clicked inside sidebar on mobile, close sidebar
       if (sidebar && sidebar.contains(a) && mobileQuery.matches) closeSidebar();
       ev.preventDefault();
       target.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -128,7 +114,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }, { passive: true });
   });
 
-  // Optional: ScrollReveal & VanillaTilt if present
   if (typeof ScrollReveal !== "undefined") {
     try {
       const sr = ScrollReveal();
@@ -137,6 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
       sr.reveal(".about-img-container", { scale: 0.98, duration: 420 });
     } catch (e) {}
   }
+
   if (typeof VanillaTilt !== "undefined") {
     try {
       document.querySelectorAll(".repository-card, .about-img-container").forEach(el => {
@@ -145,7 +131,6 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (e) {}
   }
 
-  // Liquify (optimized) — disabled on touch
   if (imgStack && turb && profileBack && !isTouch) {
     try { turb.setAttribute("numOctaves", "1"); } catch (e) {}
     try { turb.setAttribute("baseFrequency", "0 0"); } catch (e) {}
@@ -174,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function step() {
       currentFreq += (targetFreq - currentFreq) * 0.18;
-      const val = `${currentFreq.toFixed(4)} ${ (currentFreq * 0.9).toFixed(4) }`;
+      const val = `${currentFreq.toFixed(4)} ${(currentFreq * 0.9).toFixed(4)}`;
       try { turb.setAttribute("baseFrequency", val); } catch (e) {}
       const filter = turb.parentNode;
       const disp = filter ? filter.querySelector("feDisplacementMap") : null;
@@ -191,6 +176,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!rafId) step();
       }
     }
+
     function stopAndReset() {
       targetFreq = 0;
       setTimeout(() => {
@@ -206,16 +192,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     imgStack.addEventListener("mouseenter", (e) => { if (!mobileQuery.matches) { start(); setTargetFromEvent(e); } }, { passive: true });
     imgStack.addEventListener("mousemove", (e) => { if (!mobileQuery.matches) setTargetFromEvent(e); }, { passive: true });
-    imgStack.addEventListener("mouseleave", (e) => { stopAndReset(); }, { passive: true });
+    imgStack.addEventListener("mouseleave", () => { stopAndReset(); }, { passive: true });
     imgStack.addEventListener("pointerenter", (e) => { if (!mobileQuery.matches && e.pointerType === 'mouse') { start(); setTargetFromEvent(e); } }, { passive: true });
     imgStack.addEventListener("pointermove", (e) => { if (!mobileQuery.matches && e.pointerType === 'mouse') setTargetFromEvent(e); }, { passive: true });
-    imgStack.addEventListener("pointerleave", (e) => { stopAndReset(); }, { passive: true });
+    imgStack.addEventListener("pointerleave", () => { stopAndReset(); }, { passive: true });
   } else if (profileBack) {
     profileBack.style.filter = "none";
     if (turb) try { turb.setAttribute("baseFrequency", "0 0"); } catch (e) {}
   }
 
-  // Fish cursor (disabled on touch and small screens)
   if (fish) {
     if (isTouch || mobileQuery.matches) {
       fish.style.display = "none";
@@ -233,6 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
         mouseX = ev.clientX;
         mouseY = ev.clientY;
       }
+
       window.addEventListener("pointermove", handleMove, { passive: true });
       window.addEventListener("touchmove", handleMove, { passive: true });
 
@@ -241,7 +227,8 @@ document.addEventListener("DOMContentLoaded", () => {
         fishY += (mouseY - fishY) * ease;
         vx = (fishX - lastX);
         vy = (fishY - lastY);
-        lastX = fishX; lastY = fishY;
+        lastX = fishX;
+        lastY = fishY;
         const angle = Math.atan2(vy, vx) * (180 / Math.PI);
         const speed = Math.min(1.6, Math.hypot(vx, vy) * 0.08);
         const scale = 1 + speed * 0.14;
@@ -261,6 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
           fish.style.opacity = "1";
         }
       }
+
       window.addEventListener("pointerdown", pointerInteracts);
       window.addEventListener("pointerup", pointerInteracts);
       window.addEventListener("pointerover", pointerInteracts);
@@ -268,11 +256,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (mobileQuery.addEventListener) {
         mobileQuery.addEventListener('change', (e) => {
-          if (e.matches) {
-            fish.style.display = "none";
-          } else {
-            fish.style.display = "";
-          }
+          if (e.matches) fish.style.display = "none";
+          else fish.style.display = "";
         });
       } else {
         window.addEventListener('resize', () => {
@@ -283,7 +268,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Keep responsive behavior when breakpoint changes
   if (mobileQuery.addEventListener) {
     mobileQuery.addEventListener('change', (e) => {
       if (e.matches) {
@@ -294,7 +278,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ensure ARIA states consistent
   if (sidebar && !sidebar.hasAttribute('aria-hidden')) sidebar.setAttribute('aria-hidden', 'true');
   if (overlay && !overlay.hasAttribute('aria-hidden')) overlay.setAttribute('aria-hidden', 'true');
 });
